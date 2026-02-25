@@ -1,19 +1,22 @@
-🎬 Generador de Pasillo Animado en Blender
-📋 Descripción General
+# Generador de Pasillo Animado en Blender
+
+
+# Descripción General
 Este script de Python para Blender genera automáticamente un pasillo curvo con una cámara animada que recorre toda la estructura. Es perfecto para crear escenas cinemáticas, visualizaciones arquitectónicas o fondos para animaciones.
 El pasillo consta de bloques alternados en colores oscuro y naranja a ambos lados de un suelo blanco, siguiendo una trayectoria sinusoidal suave. La cámara sigue automáticamente este camino a lo largo de 300 frames.
 
-🎯 Características Principales
 
-✅ Generación automática de pasillo con curvas suaves
-✅ Cámara animada que sigue el recorrido completo
-✅ Colores alternados en los bloques (patrón ajedrezado)
-✅ Iluminación profesional con luz solar y luces puntuales
-✅ Totalmente parametrizable (ancho, longitud, curvas, velocidad)
-✅ Listo para renderizar directamente en Blender
+# Características Principales
+
+Generación automática de pasillo con curvas suaves
+Cámara animada que sigue el recorrido completo
+Colores alternados en los bloques (patrón ajedrezado)
+Iluminación profesional con luz solar y luces puntuales
+Totalmente parametrizable (ancho, longitud, curvas, velocidad)
+Listo para renderizar directamente en Blender
 
 
-🚀 Cómo Usar
+# Cómo Usar
 Paso 1: Preparar Blender
 
 Abre Blender (versión 2.8 o superior recomendada)
@@ -23,8 +26,8 @@ Crea un nuevo archivo de texto o abre uno existente
 Paso 2: Ejecutar el Script
 
 Copia y pega el código completo en el editor de texto
-Presiona Alt + P o haz clic en ▶ Run Script
-¡El pasillo se generará automáticamente!
+Presiona Alt + P o haz clic en Run Script
+El pasillo se generará automáticamente
 
 Paso 3: Ver la Animación
 
@@ -34,7 +37,8 @@ Presiona ESPACIO para reproducir la animación
 La cámara recorrerá todo el pasillo automáticamente
 
 
-⚙️ Parámetros Configurables
+# Parámetros Configurables
+
 Puedes personalizar el pasillo modificando estas variables en la sección PASO 3:
 pythonancho_pasillo = 3.5          # Ancho entre bloques (más grande = pasillo más amplio)
 num_bloques = 40             # Cantidad de bloques a lo largo del camino
@@ -44,8 +48,9 @@ frecuencia_curva = 2         # Número de ondulaciones en el recorrido
 Para ajustar la velocidad de la cámara, modifica en PASO 8:
 pythonnum_frames = 300  # Más frames = cámara más lenta
 
-📖 Explicación Detallada del Código
-🔧 PASO 1: Función de Creación de Materiales
+# Explicación Detallada del Código
+
+PASO 1: Función de Creación de Materiales
 pythondef crear_material(nombre, color_rgb):
     mat = bpy.data.materials.new(name=nombre)
     mat.diffuse_color = (*color_rgb, 1.0)
@@ -59,13 +64,13 @@ Ejemplo:
 (1.0, 1.0, 1.0) = blanco
 
 
-🧹 PASO 2: Limpieza del Entorno
+PASO 2: Limpieza del Entorno
 pythonbpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete()
 ¿Qué hace?
 Elimina todos los objetos existentes en la escena para empezar con un lienzo limpio. Esto evita que objetos anteriores interfieran con el nuevo pasillo.
 
-🎨 PASO 3: Definición de Materiales
+PASO 3: Definición de Materiales
 pythonmat_pared_oscura = crear_material("ParedOscura", (0.1, 0.1, 0.1))
 mat_pared_naranja = crear_material("ParedNaranja", (0.8, 0.3, 0.1))
 mat_suelo_blanco = crear_material("SueloBlanco", (1.0, 1.0, 1.0))
@@ -77,7 +82,7 @@ Pared Naranja: Color naranja cálido para dinamismo
 Suelo Blanco: Base limpia que refleja luz
 
 
-📐 PASO 4: Configuración de Parámetros
+PASO 4: Configuración de Parámetros
 pythonancho_pasillo = 3.5
 num_bloques = 40
 longitud_total = 50
@@ -93,7 +98,7 @@ amplitud_curva: Qué tan lejos se desvía lateralmente (en unidades)
 frecuencia_curva: Cuántas "olas" tendrá el recorrido
 
 
-📍 PASO 5: Generar Puntos del Recorrido
+PASO 5: Generar Puntos del Recorrido
 pythonfor i in range(num_bloques):
     t = i / (num_bloques - 1)
     y = t * longitud_total
@@ -112,7 +117,7 @@ angulo_rotacion: Calcula cómo deben rotar los bloques para seguir la curva tang
 
 Analogía: Imagina dibujar una serpiente en un papel. La "y" es qué tan abajo está cada segmento, y la "x" es qué tanto se curva a los lados.
 
-🧱 PASO 6: Crear Bloques del Pasillo
+PASO 6: Crear Bloques del Pasillo
 pythonfor i, pos in enumerate(posiciones_camino):
     # Calcular posición perpendicular
     dx = math.cos(angulo)
@@ -133,7 +138,7 @@ Crea el suelo: Coloca un plano blanco entre los bloques
 
 Resultado: Un "túnel" con paredes coloridas que sigue la curva calculada.
 
-📹 PASO 7: Crear Curva Bezier para la Cámara
+PASO 7: Crear Curva Bezier para la Cámara
 pythonbpy.ops.curve.primitive_bezier_curve_add(location=(0, 0, 0))
 path_curve = bpy.context.active_object
 
@@ -155,7 +160,7 @@ altura_camara = 2.0: La cámara flota 2 unidades sobre el suelo
 
 Analogía: Es como poner rieles invisibles para un carrito de montaña rusa.
 
-🎥 PASO 8: Configurar Cámara con Follow Path
+PASO 8: Configurar Cámara con Follow Path
 pythonfollow_path = camera.constraints.new(type='FOLLOW_PATH')
 follow_path.target = path_curve
 follow_path.use_curve_follow = True
@@ -171,7 +176,7 @@ up_axis = 'UP_Z': El techo de la escena es el eje Z
 
 Resultado: La cámara "mira hacia adelante" mientras se mueve, como si fueras tú caminando por el pasillo.
 
-⏱️ PASO 9: Animar el Movimiento
+PASO 9: Animar el Movimiento
 pythonnum_frames = 300
 follow_path.offset = -0      # Inicio (frame 1)
 follow_path.keyframe_insert(data_path="offset", frame=1)
@@ -187,7 +192,7 @@ interpolation = 'LINEAR': Velocidad constante (sin aceleraciones)
 
 Dato: 300 frames ÷ 24 FPS = 12.5 segundos de animación.
 
-💡 PASO 10: Iluminación
+PASO 10: Iluminación
 python# Luz solar general
 bpy.ops.object.light_add(type='SUN', location=(0, 25, 30))
 sol.data.energy = 1.5
@@ -204,7 +209,7 @@ Luces Puntuales (POINT): Colocadas cada 5 bloques, crean atmósfera y profundida
 
 Efecto: El pasillo tiene iluminación profesional sin necesidad de configuración manual.
 
-👁️ PASO 11: Ocultar la Curva
+PASO 11: Ocultar la Curva
 pythonpath_curve.hide_render = True
 path_curve.hide_viewport = True
 ¿Qué hace?
@@ -215,7 +220,7 @@ No moleste en la vista del viewport
 
 La curva sigue funcionando, pero nadie la ve.
 
-🎓 Conceptos Clave Explicados
+Conceptos Clave Explicados
 ¿Qué es una Curva Bezier?
 Es un tipo de curva matemática que crea transiciones suaves entre puntos. Blender usa "handles" (manijas) para controlar la curvatura automáticamente.
 ¿Qué es un Constraint?
@@ -225,7 +230,7 @@ Estas funciones trigonométricas crean patrones de onda perfectos. El seno gener
 ¿Qué es atan2()?
 Calcula el ángulo de rotación necesario para que un objeto apunte en cierta dirección. Es como usar una brújula matemática.
 
-🎨 Personalizaciones Avanzadas
+Personalizaciones Avanzadas
 Cambiar los colores:
 pythonmat_pared_naranja = crear_material("ParedNaranja", (0.0, 0.5, 1.0))  # Azul
 Hacer el pasillo recto:
@@ -235,49 +240,49 @@ pythonnum_frames = 150  # La mitad del tiempo (6.25 segundos)
 Más ondulaciones:
 pythonfrecuencia_curva = 4  # Doble de curvas
 
-🐛 Resolución de Problemas
-❌ "La cámara no se mueve"
+Resolución de Problemas
+"La cámara no se mueve"
 
 Asegúrate de presionar ESPACIO para reproducir la animación
 Verifica que estás en vista de cámara (NUMPAD 0)
 
-❌ "Los bloques se ven raros"
+"Los bloques se ven raros"
 
 Prueba reducir amplitud_curva si las curvas son muy pronunciadas
 Aumenta num_bloques para transiciones más suaves
 
-❌ "No veo los colores"
+"No veo los colores"
 
 Cambia a vista Material Preview (Z → Material Preview)
 O renderiza la escena (F12)
 
 
-📦 Requisitos
+Requisitos
 
 Blender: Versión 2.8 o superior
 Python: Incluido con Blender (no necesitas instalarlo)
 Sistema: Windows, macOS o Linux
 
 
-📄 Licencia
+Licencia
 Este proyecto es de código abierto. Siéntete libre de usarlo, modificarlo y compartirlo.
 
-🤝 Contribuciones
-¿Tienes ideas para mejorar el script? ¡Las contribuciones son bienvenidas!
+Contribuciones
+¿Tienes ideas para mejorar el script? Las contribuciones son bienvenidas!
 
 Haz un fork del repositorio
 Crea una rama para tu mejora
 Envía un pull request
 
 
-📚 Recursos Adicionales
+Recursos Adicionales
 
 Documentación oficial de Blender Python API
 Tutorial de Blender Scripting
 Comunidad de Blender en Stack Exchange
 
 
-✨ Código Completo
+Código Completo
 pythonimport bpy
 import math
 
