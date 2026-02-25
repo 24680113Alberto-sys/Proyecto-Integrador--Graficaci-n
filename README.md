@@ -1,7 +1,10 @@
 Generador de Pasillo Animado en Blender
+
+
 Descripción General
 Este script de Python para Blender genera automáticamente un pasillo curvo con una cámara animada que recorre toda la estructura. Es perfecto para crear escenas cinemáticas, visualizaciones arquitectónicas o fondos para animaciones.
 El pasillo consta de bloques alternados en colores oscuro y naranja a ambos lados de un suelo blanco, siguiendo una trayectoria sinusoidal suave. La cámara sigue automáticamente este camino a lo largo de 300 frames.
+
 
 Características Principales
 
